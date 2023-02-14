@@ -60,6 +60,5 @@ class GenerateExcelView(APIView):
             stream = tmp.read()
 
         response = HttpResponse(content = stream, content_type = 'application/ms-excel')
-        # response = HttpResponse(content = stream, content_type = 'application/ms-excel')
         response["Content-Disposition"] = 'attachment; filename="' + filename + '"'
         return response
