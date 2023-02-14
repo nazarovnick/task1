@@ -15,14 +15,21 @@ Including another URLconf
 """
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path
-
-from news_app.views import index_page
+from django.urls import path, include
+from news_app.views import index_page, NewsViewSet, GenerateExcelView
 from news_project import settings
+from rest_framework import routers
+
+router = routers.SimpleRouter()
+router.register(r'news', NewsViewSet)
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index_page),
+    path('api/', include(router.urls)),
+    path('api/export/news', GenerateExcelView.as_view(), name = 'export_xlsx'),
 ]
 
 if settings.DEBUG:
